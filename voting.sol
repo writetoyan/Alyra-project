@@ -32,13 +32,13 @@ contract Voting is Ownable{
     }
 
     WorkflowStatus public workflowStatus;
-    mapping(address => Voter) whitelist;
+    mapping(address => Voter) public whitelist;
     Proposal[] public proposals;
     uint proposalId = 0;
     uint public winningProposalId; 
 
     function nextStatus() public onlyOwner {
-        require(uint(workflowStatus) < 6, "Congratulation, your voting session was a success!");
+        require(uint(workflowStatus) < 6, "Pls reset before making a new vote session");
         WorkflowStatus previousStatus = workflowStatus;
         workflowStatus = WorkflowStatus (uint(workflowStatus) + 1);
         emit WorkflowStatusChange(previousStatus, workflowStatus);
@@ -46,8 +46,18 @@ contract Voting is Ownable{
 
     function register(address _voterAddress) public onlyOwner {
         require(workflowStatus == WorkflowStatus.RegisteringVoters, "This is not registration period!");
+        //require(!whitelist[_voterAddress].isRegistered); disabled for reseting purpose
         whitelist[_voterAddress].isRegistered = true;
+        whitelist[_voterAddress].hasVoted = false;     //reset for a new vote session
         emit VoterRegistered(_voterAddress);
+    }
+
+    // In case there is a mistake or someone left between two different voting session 
+    // even if he cannot vote without being registered again for the new vote
+    // In order to have an up do date list of the voters for the new session
+    function remove(address _voterAddress) public onlyOwner {
+        require(workflowStatus == WorkflowStatus.RegisteringVoters, "This is not registration period!");
+        whitelist[_voterAddress].isRegistered = false;
     }
 
     function makeProposal(string calldata _description) public {
@@ -88,4 +98,12 @@ contract Voting is Ownable{
         _voteCount = proposals[winningProposalId].voteCount;
     }
 
+    // Voters have to be registered again in order to be able to vote for the new session
+    // If voters between two session left, the whitelist have to be updated by removing them
+    function reset() public onlyOwner {
+        require(workflowStatus == WorkflowStatus.VotesTallied, "Pls wait for the end of the previous vote session before making a new one");
+        delete proposals;
+        proposalId = 0;
+        workflowStatus = WorkflowStatus(0);
+    }
 }
