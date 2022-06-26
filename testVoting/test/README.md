@@ -12,11 +12,11 @@ Moreover, that leads to less mistake due to the unique set up for testing a part
 
 ## HOW TO LAUNCH THE TEST
 
-1. Launch Ganache
+1. Launch Ganache in one terminal
 
 >`ganache`
 
-2. Lauch the test
+2. In another terminal, lauch the test
 
 >`truffle test`
 
@@ -32,7 +32,8 @@ Moreover, that leads to less mistake due to the unique set up for testing a part
 
 ## DETAILS 
 
-1. Modifier testing
+
+1. **Modifier testing**
 
 There are two modifiers that is being used in the voting contract. The first one is the onlyOwner modifier that is imported from the Ownable contract by OpenZeppelin and the second one the modifier that requires to be a registered voter. 
 
@@ -44,7 +45,7 @@ We are doing the same for the two getters function but from an account that is n
 
 PS: even if the functions require to be called in a specific state of the contract, these functions can be tested because the modifier is above the requirements in the function.
 
-2. Changing state testing and their respective event
+2. **Changing state testing and their respective event**
 
 In this part of the test, we are trying to see if the normal flow of the vote is working as expected and that the corresponding event is correctly emited. 
 
@@ -52,7 +53,7 @@ For that, we need a variable that stock the current state of the contract (e.g. 
 
 Since the WorkflowStatus is an enum, we need to use big numbers (BN) from the test-helpers from OpenZeppelin to compare them. 
 
-3. Wait for the right moment
+3. **Wait for the right moment**
 
 There are three main action that can be called during the voting procedure: 
 
@@ -64,7 +65,7 @@ We are testing them together because these actions can only be taken during the 
 
 To make sure these actions cannot be called when it's not the right moment, we are setting up the contract to the registering state and trying to call them with the right modifier requirement to check if we got a revert.
 
-4. Registration period testing
+4. **Registration period testing**
 
 We are now starting to test the different step of the voting contract. At this stage, we are checking if the addVoter() function, register correctly a voter. 
 
@@ -74,7 +75,7 @@ Then we call the getter function to be sure that the voter is registered by look
 
 Moreover, we need to be sure, that an event is emitting with the correct address and that once registered, it is not possible to register the same address again.
 
-5. Proposal period testing
+5. **Proposal period testing**
 
 In this state, it is possible for the voters registered to make proposals to be voted. 
 
@@ -84,13 +85,13 @@ The different requirements are that a proposal is registered correctly (we need 
 
 We are also testing the fact that a voter can make more than one proposal but cannot make a proposal that is empty.
 
-6. Voting period testing
+6. **Voting period testing**
 
 In this state, we are testing the voting period. For that we are setting up a new instance until the voting session by providing different proposal to vote for. 
 
 We need to see if the vote from a voter is taken into account by checking if the proposition the voter voted is registered correctly in his struct. That after making a vote, his state say that he already voted and it emit an event with the proposition he voted for. Of course we need to test that a voter cannot vote two times. 
 
-7. Winner testing
+7. **Winner testing**
 
 In this last test, we are testing if the winningProposalID is returning the right proposal winner. 
 
