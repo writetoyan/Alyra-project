@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import useEth from "../contexts/EthContext/useEth";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
-function Register() {
+function Register(props) {
     const { state: { contract, accounts } } = useEth();
     const [ inputValue, setInputValue ] = useState("")
    
@@ -19,16 +21,21 @@ function Register() {
     }
 
     return(
-        <form onSubmit={handleSubmit}>
-            <input 
-                type="text" 
-                placeholder="Add a new voter address"
-                name="addressToAdd"
-                value={inputValue}
-                onChange={handleInputChange}
-            />
-            <button> Add a new voter </button>
-        </form>
+        <div>
+            {props.workflowStatus === "0" &&
+            <Form onSubmit={handleSubmit}>
+                <Form.Control 
+                    size="lg"
+                    type="text" 
+                    placeholder="Add a new voter address"
+                    name="addressToAdd"
+                    value={inputValue}
+                    onChange={handleInputChange}
+                />
+                <Button className="mt-3 d-grid gap-2 col-3" size="lg" onClick={handleSubmit}> Add a new voter </Button>
+            </Form>
+            }
+        </div>
     );
 }
 

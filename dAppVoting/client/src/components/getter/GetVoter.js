@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import useEth from "../contexts/EthContext/useEth";
+import useEth from "../../contexts/EthContext/useEth";
 
 function GetVoter() {
     const { state: { contract, accounts } } = useEth();

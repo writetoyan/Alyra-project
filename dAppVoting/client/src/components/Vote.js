@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import useEth from "../contexts/EthContext/useEth";
 
-function Vote() {
+function Vote(props) {
     const { state: { contract, accounts } } = useEth();
     const [ inputValue, setInputValue ] = useState("");
 
@@ -21,6 +21,7 @@ function Vote() {
     return(
 
         <div>
+            {props.workflowStatus === 2 &&
             <form onSubmit={handleSubmit}>
                 <input 
                     type="text" 
@@ -31,6 +32,7 @@ function Vote() {
                 />
                 <button> Vote</button>
             </form>
+            }   
         </div>
 
     );
