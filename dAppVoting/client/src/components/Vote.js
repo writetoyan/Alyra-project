@@ -1,7 +1,11 @@
 import React, {useState} from 'react';
 import useEth from "../contexts/EthContext/useEth";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Alert from 'react-bootstrap/Alert';
 
-function Vote(props) {
+export default function Vote(props) {
+    
     const { state: { contract, accounts } } = useEth();
     const [ inputValue, setInputValue ] = useState("");
 
@@ -21,21 +25,28 @@ function Vote(props) {
     return(
 
         <div>
-            {props.workflowStatus === 2 &&
-            <form onSubmit={handleSubmit}>
-                <input 
+            {props.workflowStatus === "3" &&
+            <Form className="mt-5" onSubmit={handleSubmit}>
+                <Form.Control 
+                    className="6"
+                    size="lg"
                     type="text" 
                     placeholder="Vote for a proposal number"
                     name="voteProposal"
                     value={inputValue}
                     onChange={handleInputChange}
                 />
-                <button> Vote</button>
-            </form>
+                {props.currentOwner !== accounts[0] ?
+                <Button className="mt-5 mb-5 gap-2 col-6" size="lg" onClick={handleSubmit}> Vote </Button> :
+                <Button className="mt-5 gap-2 col-6" size="lg" onClick={handleSubmit}> Vote </Button>
+                }
+            </Form>
             }   
+            {props.workflowStatus === "2" && props.currentOwner !== accounts[0] &&
+            <Alert className="mt-5 mb-3">You will soon be able to vote!</Alert>
+            }
         </div>
 
     );
 }
 
-export default Vote;

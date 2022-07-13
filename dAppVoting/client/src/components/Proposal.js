@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
 import useEth from "../contexts/EthContext/useEth";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
-function Proposal(props) {
+export default function Proposal(props) {
+    
     const { state: { contract, accounts } } = useEth();
     const [ inputValue, setInputValue ] = useState("")
    
@@ -22,20 +25,23 @@ function Proposal(props) {
 
         <div>
             {props.workflowStatus === "1" &&
-            <form onSubmit={handleSubmit}>
-                <input 
+            <Form className="mt-5" onSubmit={handleSubmit}>
+                <Form.Control 
+                    ClassName="col-6"
+                    size="lg"
                     type="text" 
                     placeholder="Enter a proposal"
                     name="proposal"
                     value={inputValue}
                     onChange={handleInputChange}
                 />
-                <button> Add a proposal </button>
-            </form>
+                {props.currentOwner !== accounts[0] ?
+                <Button className="mt-5 mb-5 gap-2 col-6" size="lg" onClick={handleSubmit}> Add a proposal </Button> :
+                <Button className="mt-5 gap-2 col-6" size="lg" onClick={handleSubmit}> Add a proposal </Button> 
+                }
+            </Form>
             }
         </div>
 
     );
 }
-
-export default Proposal;
