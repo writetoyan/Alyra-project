@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import useEth from "../contexts/EthContext/useEth";
+import useEth from "../../contexts/EthContext/useEth";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';

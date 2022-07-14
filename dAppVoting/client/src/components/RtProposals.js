@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import useEth from "../contexts/EthContext/useEth";
 import Table from 'react-bootstrap/Table';
 import Card from 'react-bootstrap/Card';
@@ -28,22 +28,16 @@ export default function RtProposals() {
             console.error(err)
         }
     }
-
-    contract.getPastEvents('ProposalRegistered', {
-        fromBlock: 0, 
-        toBlock: 'latest'
-    }, function(error, events){setTxn(events)})
-    .then(function(error){
-        console.error(error)
-    })
-
-    const allo = async () => { 
-        txn.map((item) => {
-            return (
-                contract.methods.GetOneProposal(item.returnValues.proposalId).call({from: accounts[0]})
-            )
-    })}
-
+  
+    useEffect(() => {
+        contract.getPastEvents('ProposalRegistered', {
+            fromBlock: 0, 
+            toBlock: 'latest'
+        }, function(error, events){console.log(events)})
+        .then(function(events){
+            setTxn(events)
+        })
+    }, [])
     
     return (
         <div>
@@ -88,11 +82,11 @@ export default function RtProposals() {
                     </tr>
                 </thead>
                 <tbody>
-                    {txn.map((address, index) => <tr><td key={index}>{index}</td><td>{address.returnValues.voterAddress}</td></tr>)}
+                   {txn.map((txn, index) => <tr key={index}><td key={index}>{txn.returnValues._proposalId}</td><td key={txn}>{txn.returnValues._proposal}</td></tr>)}
                 </tbody>
-            
             </Table>
         </Card>
     </div>
     )
 }
+

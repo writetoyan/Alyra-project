@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
-import useEth from "../contexts/EthContext/useEth";
+import useEth from "../../contexts/EthContext/useEth";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Alert from 'react-bootstrap/Alert';
 
-export default function Vote(props) {
+export default function Proposal(props) {
     
     const { state: { contract, accounts } } = useEth();
-    const [ inputValue, setInputValue ] = useState("");
-
+    const [ inputValue, setInputValue ] = useState("")
+   
     const handleInputChange = event => {
           setInputValue(event.target.value);
     };
@@ -16,7 +15,7 @@ export default function Vote(props) {
     const handleSubmit = async event => {
         event.preventDefault();
         try{
-        await contract.methods.setVote(inputValue).send({from: accounts[0]});
+        await contract.methods.addProposal(inputValue).send({from: accounts[0]});
         } catch(err) {
             console.error(err);
         }
@@ -25,28 +24,24 @@ export default function Vote(props) {
     return(
 
         <div>
-            {props.workflowStatus === "3" &&
+            {props.workflowStatus === "1" &&
             <Form className="mt-5" onSubmit={handleSubmit}>
                 <Form.Control 
-                    className="6"
+                    className="col-6"
                     size="lg"
                     type="text" 
-                    placeholder="Vote for a proposal number"
-                    name="voteProposal"
+                    placeholder="Enter a proposal"
+                    name="proposal"
                     value={inputValue}
                     onChange={handleInputChange}
                 />
                 {props.currentOwner !== accounts[0] ?
-                <Button className="mt-5 mb-5 gap-2 col-6" size="lg" onClick={handleSubmit}> Vote </Button> :
-                <Button className="mt-5 gap-2 col-6" size="lg" onClick={handleSubmit}> Vote </Button>
+                <Button className="mt-5 mb-5 gap-2 col-6" size="lg" onClick={handleSubmit}> Add a proposal </Button> :
+                <Button className="mt-5 gap-2 col-6" size="lg" onClick={handleSubmit}> Add a proposal </Button> 
                 }
             </Form>
-            }   
-            {props.workflowStatus === "2" && props.currentOwner !== accounts[0] &&
-            <Alert className="mt-5 mb-3">You will soon be able to vote!</Alert>
             }
         </div>
 
     );
 }
-

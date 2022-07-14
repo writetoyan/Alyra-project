@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import useEth from "../contexts/EthContext/useEth";
 import Table from 'react-bootstrap/Table';
 import Card from 'react-bootstrap/Card';
@@ -28,15 +28,15 @@ export default function RtWhitelist() {
             console.error(err)
         }
     }
-   
-    contract.getPastEvents('VoterRegistered', {
-        fromBlock: 0, 
-        toBlock: 'latest'
-    }, function(error, events){setTxn(events)})
-    .then(function(error){
-        console.log(error)
-    })
 
+    useEffect(() => {
+        contract.events.VoterRegistered({
+            fromBlock: 0
+        })
+        .on('data', (event) => {console.log(event)
+            setTxn((events) => [...events, event])
+        })
+       },[])
 
     return (
         <div>
@@ -83,7 +83,7 @@ export default function RtWhitelist() {
                         </tr>
                     </thead>
                     <tbody>
-                        {txn.map((address, index) => <tr><td key={index}>{index}</td><td>{address.returnValues.voterAddress}</td></tr>)}
+                         {txn.slice(txn.length/2).map((address, index) => <tr key={index}><td key={index}>{index}</td><td key={address}>{address.returnValues._voterAddress}</td></tr>)}
                     </tbody>
                 
                 </Table>

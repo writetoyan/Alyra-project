@@ -1,10 +1,10 @@
 import React from 'react';
-import Main from "./Main";
+import RtMain from "./RtMain";
 import RtWhitelist from "./RtWhitelist";
 import RtProposals from "./RtProposals";
 import RtResults from "./RtResults";
 import useEth from "../contexts/EthContext/useEth";
-import { Container, Navbar, Nav, Button} from 'react-bootstrap';
+import { Container, Navbar, Nav} from 'react-bootstrap';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
 
 export default function NavigationBar() {
@@ -31,7 +31,7 @@ export default function NavigationBar() {
         </Container>
       </Navbar>
         <Routes>
-          <Route path="/" element={<Main />}/>           
+          <Route path="/" element={<RtMain />}/>           
           <Route path="/whitelist" element={<RtWhitelist />}/>
           <Route path="/proposals" element={<RtProposals />}/>
           <Route path="/results" element={<RtResults />}/>

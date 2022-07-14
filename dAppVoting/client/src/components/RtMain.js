@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import useEth from "../contexts/EthContext/useEth";
-import Register from "./Register"
-import Proposal from "./Proposal"
-import Vote from "./Vote"
-import TallyVote from "./TallyVote"
-import { Button } from "react-bootstrap"
+import Register from "./State/Register"
+import Proposal from "./State/Proposal"
+import Vote from "./State/Vote"
+import TallyVote from "./State/TallyVote"
+import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card";
 
 
-export default function Main() {
+export default function RtMain() {
 
     const { state: { contract, accounts } } = useEth();
     const [workflowStatus, setWorkflowStatus] = useState("");

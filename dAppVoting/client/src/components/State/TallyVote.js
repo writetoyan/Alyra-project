@@ -1,5 +1,5 @@
 import React from 'react';
-import useEth from "../contexts/EthContext/useEth";
+import useEth from "../../contexts/EthContext/useEth";
 import Alert from "react-bootstrap/Alert"
 
 
