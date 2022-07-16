@@ -12,6 +12,7 @@ export default function Proposal(props) {
           setInputValue(event.target.value);
     };
 
+    //function to add a proposal
     const handleSubmit = async event => {
         event.preventDefault();
         try{
@@ -24,6 +25,7 @@ export default function Proposal(props) {
     return(
 
         <div>
+            {/*Voters can make proposals*/}
             {props.workflowStatus === "1" &&
             <Form className="mt-5" onSubmit={handleSubmit}>
                 <Form.Control 

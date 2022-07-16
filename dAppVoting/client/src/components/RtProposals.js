@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
 
-
+//Page that gives info about the proposals
 export default function RtProposals() {
 
     const { state: { contract, accounts } } = useEth();
@@ -19,6 +19,7 @@ export default function RtProposals() {
         setInputValue(event.target.value);
   };
     
+    //Function that gives more info about a proposal
     const handleSubmit = async event => { 
         event.preventDefault();
         try {
@@ -29,6 +30,7 @@ export default function RtProposals() {
         }
     }
   
+    //Event to get the proposals made by the voters
     useEffect(() => {
         contract.getPastEvents('ProposalRegistered', {
             fromBlock: 0, 
@@ -43,6 +45,7 @@ export default function RtProposals() {
         <div>
         <Card className="mt-5 shadow p-3 mb-5 bg-body rounded">
             <h3 className="text-center">Proposals</h3>
+            {/*User can enter the number of the proposal he wants more info on*/}
             <Form className="mt-5">
                 <Form.Control
                     className="col-6 mb-3"
@@ -57,6 +60,7 @@ export default function RtProposals() {
                     <Button className="mt-5 mb-5 gap-2 col-4" size="lg" onClick={handleSubmit}> get proposal</Button>
                     <Col className="col-1"></Col>
                     <Card className="text-center col-6 mt-3 mb-3 ">
+                        {/*Display the info about the proposal asked*/}
                         <Table striped>
                             <thead>
                                 <tr>
@@ -74,6 +78,8 @@ export default function RtProposals() {
                     </Card>
                 </Row>
             </Form>  
+
+            {/*List all the proposals*/}
             <Table className="mt-3" striped bordered hover variant="primary">
                 <thead>
                     <tr>

@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 
+//Page that give the winner proposal
 export default function RtResults() {
 
     const { state: { contract, accounts } } = useEth();
@@ -11,13 +12,18 @@ export default function RtResults() {
     const [workflowStatus, setWorkflowStatus] = useState();
     const [ proposal, setProposal ] = useState({});
 
+    //Function that gives the winning proposal only after the vote is over
     const winner = async () => {
+        try{
         const workflowStatus = await contract.methods.workflowStatus().call();
         setWorkflowStatus(workflowStatus);
         const winnerId = await contract.methods.winningProposalID().call()
         setWinnerId(winnerId);
         const proposalData = await contract.methods.getOneProposal(winnerId).call({from: accounts[0]});
         setProposal(proposalData);   
+        } catch(err) {
+            console.error(err)
+        }
     }
 
 
@@ -31,12 +37,14 @@ export default function RtResults() {
                     <Button className="mt-5 mb-5 gap-2 col-8 mx-auto" size="lg" onClick={winner}>
                         Reveal the winner
                     </Button>
+                    {/*Display the winner*/}
                     {workflowStatus === "5" && 
                     <Card className="text-center col-8 mt-3 mb-5 mx-auto"> 
                         <h5>The winner is proposal number</h5> 
                         <h3>{winnerId} </h3>
                         <h5>{proposal.description}</h5>
                     </Card>} 
+                    {/*Display if the vote is not over*/}
                     {workflowStatus < "5" &&
                     <Alert className="text-center col-8 mx-auto mb-5">
                         The voting session is not over yet. Please come back later to check the results.

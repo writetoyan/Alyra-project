@@ -25,7 +25,7 @@ export default function NavigationBar() {
               <Nav.Link as={Link} to={"/results"}>Results</Nav.Link>    
             </Nav>      
           </Navbar.Collapse> 
-          <div className="white">
+          <div className="text-light">
           Wallet address: {accounts}
           </div>
         </Container>

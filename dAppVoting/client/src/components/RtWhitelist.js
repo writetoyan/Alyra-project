@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
 
-
+//Page that gives the info about all the registered users
 export default function RtWhitelist() {
 
     const { state: { contract, accounts } } = useEth();
@@ -19,6 +19,7 @@ export default function RtWhitelist() {
         setInputValue(event.target.value);
     };
     
+    //Function that give more info about a voter
     const handleSubmit = async (event) => { 
         event.preventDefault();
         try {
@@ -29,6 +30,7 @@ export default function RtWhitelist() {
         }
     }
 
+    //Event to get the registered addresses
     useEffect(() => {
         contract.events.VoterRegistered({
             fromBlock: 0
@@ -42,6 +44,7 @@ export default function RtWhitelist() {
         <div>
             <Card className="mt-5 shadow p-3 mb-5 bg-body rounded">
                 <h3 className="text-center">Whitelisted Voters</h3>
+                {/*User can enter the address he wants to have more info on*/}
                 <Form className="mt-5">
                     <Form.Control
                         className="col-6 mb-3"
@@ -53,9 +56,10 @@ export default function RtWhitelist() {
                         onChange={handleInputChange}
                     />
                     <Row className="justify-content-md-center"> 
-                        <Button id="i" className="mt-5 mb-5 gap-2 col-4" size="lg" onClick={handleSubmit}> get voter</Button>
-                        <Col className="col-2"></Col>
-                        <Card className="text-center col-4 mt-3 mb-3 ">
+                        <Button id="i" className="mt-5 mb-5 gap-2 col-md-4" size="lg" onClick={handleSubmit}> get voter</Button>
+                        <Col className="col-sm-2"></Col>
+                        <Card className="text-center col-md-4 mt-3 mb-3">
+                            {/*Display the info about the address asked*/}
                             <Table striped>
                                 <thead>
                                     <tr>
@@ -74,7 +78,9 @@ export default function RtWhitelist() {
                             </Table>
                         </Card>
                     </Row>
-                </Form>  
+                </Form> 
+
+                {/*List of all the registered addresses*/} 
                 <Table className="mt-3" striped bordered hover variant="primary">
                     <thead>
                         <tr>

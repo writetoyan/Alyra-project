@@ -13,6 +13,7 @@ export default function Vote(props) {
           setInputValue(event.target.value);
     };
 
+    //function to vote
     const handleSubmit = async event => {
         event.preventDefault();
         try{
@@ -25,6 +26,7 @@ export default function Vote(props) {
     return(
 
         <div>
+            {/*Form used by user to vote*/}
             {props.workflowStatus === "3" &&
             <Form className="mt-5" onSubmit={handleSubmit}>
                 <Form.Control 
@@ -41,7 +43,8 @@ export default function Vote(props) {
                 <Button className="mt-5 gap-2 col-6" size="lg" onClick={handleSubmit}> Vote </Button>
                 }
             </Form>
-            }   
+            }
+            {/*Display message for the user if the admin haven't started the voting period*/}   
             {props.workflowStatus === "2" && props.currentOwner !== accounts[0] &&
             <Alert className="mt-5 mb-3">You will soon be able to vote!</Alert>
             }
