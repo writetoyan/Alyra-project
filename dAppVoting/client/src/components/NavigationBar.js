@@ -35,6 +35,7 @@ export default function NavigationBar() {
           <Route path="/whitelist" element={<RtWhitelist />}/>
           <Route path="/proposals" element={<RtProposals />}/>
           <Route path="/results" element={<RtResults />}/>
+          <Route path="/Alyra-project" element={<RtMain />}/>
         </Routes>
     </Router>
 

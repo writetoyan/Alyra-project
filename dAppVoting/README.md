@@ -8,9 +8,14 @@ https://www.loom.com/share/f5b32d44b8834eabaccafc30c0974f1b
 
 Deployment on public servers:
 
+Heroku:
+
+https://writetoyan.herokuapp.com/
+
 Git Pages:
 
-Heroku:
+https://writetoyan.github.io/Alyra-project
+
 
 The smart contract has been deployed on Ropsten Testnet at that address:
 
